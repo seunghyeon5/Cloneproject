@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/user");
-
+require("dotenv").config();
 module.exports = async (req, res, next) => {
     
     const { authorization } = req.headers;
@@ -18,7 +18,7 @@ module.exports = async (req, res, next) => {
         return;
     }
     try {
-    const {userId} = jwt.verify(tokenValue, "ligthing-secret-key");
+    const {userId} = jwt.verify(tokenValue, process.env.JWT_SECRET);
         // console.log(userId);
          //decoded가 제대로된 값
         
