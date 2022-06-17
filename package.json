@@ -12,5 +12,22 @@
     "dotenv": "^16.0.1",
     "joi": "^17.6.0",
     "moment-timezone": "^0.5.34"
-  }
+  },
+  "name": "cloneproject",
+  "description": "항해 클론코딩 프로젝트",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/seunghyeon5/Cloneproject.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/seunghyeon5/Cloneproject/issues"
+  },
+  "homepage": "https://github.com/seunghyeon5/Cloneproject#readme"
 }
