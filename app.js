@@ -6,8 +6,8 @@ const userRouter = require("./routes/user");
 // const marketRouter = require("./routes/market");
 
 
-mongoose.connect('mongodb://0.0.0.0/cloneporject', {
-// mongoose.connect("mongodb+srv://test:sparta@cluster0.l2ux3.mongodb.net/THUNDERMARKET?retryWrites=true&w=majority", {
+// mongoose.connect('mongodb://0.0.0.0/cloneporject', {
+mongoose.connect("mongodb+srv://test:sparta@cluster0.l2ux3.mongodb.net/THUNDERMARKET?retryWrites=true&w=majority", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });
