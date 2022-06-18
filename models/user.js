@@ -19,6 +19,14 @@ const UserSchema = new mongoose.Schema({
     nickname: {
         type: String,
         required: true,
+    },
+
+    userporfilUrl : {
+        type : String
+    },
+
+    userpofilInfo : {
+        type : String
     }
 });
 
