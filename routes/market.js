@@ -22,7 +22,7 @@ router.post("/market", authMiddleware, async(req, res) => {
 
 //검색 상품 목록 조회 
 router.get("/market/list", async(req, res) =>{
-    const Items = await Market.find();
+    const Items = await Market.find().sort({createdAt :'desc'});
     
     
     
@@ -32,7 +32,9 @@ router.get("/market/list", async(req, res) =>{
         ImageUrl : a.ImageUrl,
         title : a.title,
         price : a.price,
+        createdAt : a.createdAt.toLocaleTimeString('ko-KR'),
         })),
+        
 
     });
 
