@@ -51,8 +51,9 @@ const MarketSchema = new mongoose.Schema(
 
         },
 
-        nickname : {
+        userId : {
             type : String,
+            required:true
         }
 },
 );
