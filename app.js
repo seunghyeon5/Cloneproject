@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const port = 8080;
 const cors = require('cors');
 const userRouter = require("./routes/user");
+const likeRouter = require("./routes/like");
 // const marketRouter = require("./routes/market");
 
 
@@ -22,7 +23,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 
-app.use('/api', express.urlencoded({ extended: false }),[userRouter]);
+app.use('/api', express.urlencoded({ extended: false }),[userRouter,likeRouter]);
 
 app.use('/', (req, res) =>{
     res.send('클론코딩 테스트 페이지')
