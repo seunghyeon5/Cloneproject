@@ -27,7 +27,7 @@ router.get("/market", authMiddleware, async(req, res) => {
         res.json({ result : true, findAllitem})
     }catch(err){
         res.json({ result: false})
-        console.log(err)
+        // console.log(err)
     }
 })
 
@@ -41,7 +41,7 @@ router.get("/market/:itemId", async (req, res) =>{
         res.json({ result: true, item });
     }catch(err){
         res.json({ result : false })
-        console.log(err)
+        // console.log(err)
     }
  });
  
@@ -63,6 +63,7 @@ router.get("/market/:itemId", async (req, res) =>{
             res.status(200).json({result: true, msg: "수정 완료"});
     }catch(err){
         res.json({ result : false })
+        // console.log(err)
     }
   });
  
@@ -81,6 +82,7 @@ router.get("/market/:itemId", async (req, res) =>{
         res.json({result: true, msg: "삭제 완료"});
     }catch(err){
         res.json({ result: false })
+        // console.log(err)
     }
  });
  
