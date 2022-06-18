@@ -1,5 +1,6 @@
 const express = require('express');
 const Market = require("../models/market")
+const moment = require("moment");
 const authMiddleware = require("../middlewares/auth-middleware")
 const router = express.Router()
 
@@ -8,9 +9,9 @@ const router = express.Router()
 router.post("/market", authMiddleware, async(req, res) => {
     try {
         const { userId } = res.locals.user;
-        const { ImageUrl, title, price, content, count, condition, exchange } = req.body;
+        const { ImageUrl, title, price, content, count, condition, exchange} = req.body;
         const createMarket = await Market.create({
-            ImageUrl, title, price, content, count, condition, exchange, userId
+            ImageUrl, title, price, content, count, condition, exchange, userId,
         });
         res.json ({ result : true, msg : "상품등록이 완료되었습니다.", createMarket})
     }catch(err){
@@ -20,7 +21,27 @@ router.post("/market", authMiddleware, async(req, res) => {
 });
 
 //검색 상품 목록 조회 
-router.get("/market/:search/:sort", authMiddleware, async(req, res) => {
+router.get("/market/list", async(req, res) =>{
+    const Items = await Market.find();
+    
+    
+    
+    
+    res.send({
+        Items : Items.map((a) => ({
+        ImageUrl : a.ImageUrl,
+        title : a.title,
+        price : a.price,
+        })),
+
+    });
+
+});
+
+
+
+//검색 상품 검색 조회
+router.get("/market/:search/:sort",  async(req, res) => {
     try{
         const {search,sort} = req.params;
         //const {type}=req.query;
@@ -60,7 +81,7 @@ router.get("/market/:search/:sort", authMiddleware, async(req, res) => {
     }
 })
 
-//상품정보 조회
+//상품정보 상세조회
 
 router.get("/market/:itemId", async (req, res) =>{
     try {

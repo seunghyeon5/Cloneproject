@@ -25,9 +25,11 @@ const UserSchema = new mongoose.Schema({
         type : String
     },
 
-    userpofilInfo : {
-        type : String
-    }
+    profilInfo : {
+      type: String
+  }
+
+  
 });
 
 

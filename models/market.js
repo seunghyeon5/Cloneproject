@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+const moment = require("moment");
 const MarketSchema = new mongoose.Schema(
     {
         ImageUrl : {
@@ -54,8 +54,10 @@ const MarketSchema = new mongoose.Schema(
         userId : {
             type : String,
             required:true
-        }
+        },
+        
 },
+    {timestamps:true},
 );
 
 

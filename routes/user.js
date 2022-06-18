@@ -3,7 +3,7 @@ const User = require("../models/user");
 const router = express.Router();
 const Joi = require("joi");
 const jwt = require("jsonwebtoken")
-const authMiddelware = require("../middlewares/auth-middleware")
+const authMiddleware = require("../middlewares/auth-middleware")
 const bcrypt = require("bcrypt");
 require("dotenv").config();
 
@@ -92,17 +92,25 @@ const postUsersSchema = Joi.object({
 
 // 로그인 인증
 
-  router.get("/user/login/me", authMiddelware, async (req, res) => { 
+  router.get("/user/login/me", authMiddleware, async (req, res) => { 
 
     
    const{ user } =  res.locals;
    
-   res.send({ userId: user.email, nickname: user.nickname});
-    
+   
+   res.send({ userId: user.email, nickname: user.nickname, userInfo : user.userId});
+   console.log(res.locals);
   });
 
   router.put("/user")
 
 
+  //마이페이지
+
+  // router.get('/api/user/mypage', authMiddleware, async, (req,res) =>{
+  //   console.log('마이페이지');
+  
+
+  // });
 
   module.exports = router;
