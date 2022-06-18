@@ -19,17 +19,29 @@ router.post("/market", authMiddleware, async(req, res) => {
     }
 });
 
+//상품목록 조회
+router.get("/market", authMiddleware, async(req, res) => {
+    try{
+        const { itemId } = req.params;
+        const findAllitem = await Market.find({itemId})
+        res.json({ result : true, findAllitem})
+    }catch(err){
+        res.json({ result: false})
+        console.log(err)
+    }
+})
+
 //상품정보 조회
 
 router.get("/market/:itemId", async (req, res) =>{
     try {
         const { itemId } = req.params;
-        const item = await Market.find(itemId)
+        const item = await Market.find({itemId})
 
         res.json({ result: true, item });
     }catch(err){
         res.json({ result : false })
-        // console.log(err)
+        console.log(err)
     }
  });
  
@@ -38,43 +50,38 @@ router.get("/market/:itemId", async (req, res) =>{
  
  router.put("/market/:itemId/modify", authMiddleware, async (req, res)=> {
 
-     const { nickname } = res.locals.user;
-     
-     const {itemId} = req.params;
-     // console.log(contentId);
-     const {title, condition, exchange, price, content, count} = req.body;
-     
-    
-     const existsItem = await Post.findById(itemId);
-     
-    
-     if (existsItem.nickname !== nickname) {
-         return res.status(400).json({existsPost, message: "판매자 정보가 일치하지 않습니다."
-     });
-         } else if (existsItem.nickname === nickname) {
-            Market.findByIdAndUpdate( contentId , { $set: { title, condition, exchange, price, content, count, createAt }});
-         }
-         res.status(200).json({result:'success', errorMessage: "수정 성공",
-         });
- 
+    try{
+        const { nickname } = res.locals.user;
+        const {itemId} = req.params;
+        const {title, condition, exchange, price, content, count} = req.body;
+        const existsItem = await Market.findById(itemId);
+        if (existsItem.nickname !== nickname) {
+            return res.status(400).json({existsPost, message: "판매자 정보가 일치하지 않습니다."});
+        } else if (existsItem.nickname === nickname) {
+            Market.findByIdAndUpdate( itemId , { $set: { title, condition, exchange, price, content, count }});
+        }
+            res.status(200).json({result: true, msg: "수정 완료"});
+    }catch(err){
+        res.json({ result : false })
+    }
   });
  
  //상품 등록 삭제
- router.delete("/post/:contentId/delete", authMiddleware, async (req, res)=>{
-     const { nickname } = res.locals.user;
-     const { ItemId } = req.params;
- 
-     const existsItem = await Market.findById(ItemId);
-     if (existsItem.nickname !== nickname) {
-         return res.status(400).json({existsItem, message: "판매자 정보가 일치하지 않습니다."
-     });
-     } else {
- 
-     await Post.findByIdAndDelete(ItemId);
-     }
-
-     res.json({result:"success"});
- 
+ router.delete("/market/:itemId/delete", authMiddleware, async (req, res)=>{
+    
+    try{
+        const { nickname } = res.locals.user;
+        const { itemId } = req.params;
+        const existsItem = await Market.findById(itemId);
+        if (existsItem.nickname !== nickname) {
+            return res.status(400).json({existsItem, message: "판매자 정보가 일치하지 않습니다."});
+        } else {
+            await Market.findByIdAndDelete(itemId);
+        }
+        res.json({result: true, msg: "삭제 완료"});
+    }catch(err){
+        res.json({ result: false })
+    }
  });
  
 module.exports = router;
