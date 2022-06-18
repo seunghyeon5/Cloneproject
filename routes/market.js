@@ -13,7 +13,8 @@ router.post("/market", authMiddleware, async(req, res) => {
         const createMarket = await Market.create({
             ImageUrl, title, price, content, count, condition, exchange, userId,
         });
-        res.json ({ result : true, msg : "상품등록이 완료되었습니다.", createMarket})
+        //res.json ({ result : true, msg : "상품등록이 완료되었습니다.", createMarket}) //test 출력
+        res.json ({ result : true, msg : "상품등록이 완료되었습니다."});
     }catch(err){
         res.json({ result : false, mag : "상품등록이 취소되었습니다." })
         // console.log(err)
@@ -42,12 +43,12 @@ router.get("/market/list", async(req, res) =>{
 
 
 
-//검색 상품 검색 조회
+// 상품 검색 조회 API
 router.get("/market/:search/:sort",  async(req, res) => {
     try{
         const {search,sort} = req.params;
         //const {type}=req.query;
-        console.log(search,sort);                      
+       // console.log(search,sort);                      
 
         if(sort==="default"){
             findAllitem = await Market.find( 
@@ -72,11 +73,19 @@ router.get("/market/:search/:sort",  async(req, res) => {
                         {'content': { '$regex': search, '$options': 'i' } }
           ]})
           .sort({ price: 'asc' }).exec(); // 가격 저가순   
-        }  
-
+        }         
+        //res.send({findAllitem}) //test출력
+        
+        res.json({
+            findAllitem : findAllitem.map((a) => ({
+            ImageUrl : a.ImageUrl,
+            title : a.title,
+            price : a.price,
+            createdAt : a.createdAt.toLocaleDateString('ko-KR')+a.createdAt.toLocaleTimeString('ko-KR'),
+            }))
+        });
+        
        
-       
-        res.json({ result : true, findAllitem})
     }catch(err){
         res.json({ result: false})
         // console.log(err)
