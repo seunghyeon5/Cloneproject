@@ -19,11 +19,40 @@ router.post("/market", authMiddleware, async(req, res) => {
     }
 });
 
-//상품목록 조회
-router.get("/market", async(req, res) => {
+//검색 상품 목록 조회 
+router.get("/market/:search/:sort", authMiddleware, async(req, res) => {
     try{
-        const { itemId } = req.params;
-        const findAllitem = await Market.find({itemId})
+        const {search,sort} = req.params;
+        //const {type}=req.query;
+        console.log(search,sort);                      
+
+        if(sort==="default"){
+            findAllitem = await Market.find( 
+                { $or: [{'title': { '$regex': search, '$options': 'i' } },
+                        {'content': { '$regex': search, '$options': 'i' } }
+          ]}).exec();    
+        }else if(sort==="time"){
+            findAllitem = await Market.find( 
+                { $or: [{'title': { '$regex': search, '$options': 'i' } },
+                        {'content': { '$regex': search, '$options': 'i' } }
+          ]})
+          .sort({ createdAt: 'desc' }).exec(); // 최신순 정렬   
+        }else if(sort==="d_price"){
+            findAllitem = await Market.find( 
+                { $or: [{'title': { '$regex': search, '$options': 'i' } },
+                        {'content': { '$regex': search, '$options': 'i' } }
+          ]})
+          .sort({ price: 'desc' }).exec(); // 가격 고가순  
+        }else if(sort==="a_price"){
+            findAllitem = await Market.find( 
+                { $or: [{'title': { '$regex': search, '$options': 'i' } },
+                        {'content': { '$regex': search, '$options': 'i' } }
+          ]})
+          .sort({ price: 'asc' }).exec(); // 가격 저가순   
+        }  
+
+       
+       
         res.json({ result : true, findAllitem})
     }catch(err){
         res.json({ result: false})
