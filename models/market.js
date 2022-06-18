@@ -1,3 +1,5 @@
+const mongoose = require('mongoose');
+
 const MarketSchema = new mongoose.Schema(
     {
         ImageUrl : {
@@ -48,14 +50,18 @@ const MarketSchema = new mongoose.Schema(
             trim : true
 
         },
+
+        nickname : {
+            type : String,
+        }
 },
 );
 
 
-PostSchema.virtual("itemId").get(function () {
+MarketSchema.virtual("itemId").get(function () {
     return this._id.toHexString();
   });
-  PostSchema.set("toJSON", {
+  MarketSchema.set("toJSON", {
     virtuals: true,
   });
 
