@@ -15,13 +15,14 @@ const postUsersSchema = Joi.object({
     password: Joi.string().required().pattern(new RegExp('^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{6,}$')), //최소6자, 하나 이상의 영문자, 하나의 숫자, 하나의 특수문자
     confirmpassword: Joi.string().required(),
     nickname: Joi.string().required(),
+    userporfilUrl : Joi.string().required(),
   });
 
 //회원가입
   router.post("/user/signup", async (req, res) => {
 
     try {
-      const { email, password, confirmpassword, nickname} =
+      const { email, password, confirmpassword, nickname, userporfilUrl} =
         await postUsersSchema.validateAsync(req.body);
         // console.log(req.body);
       
@@ -49,7 +50,7 @@ const postUsersSchema = Joi.object({
         
     
    
-      const users = new User({ nickname, password, email });
+      const users = new User({ nickname, password, email, userporfilUrl });
       await users.save();
       // console.log(users)
       res.status(201).send({
@@ -102,15 +103,44 @@ const postUsersSchema = Joi.object({
    console.log(res.locals);
   });
 
-  router.put("/user")
+
 
 
   //마이페이지
 
-  // router.get('/api/user/mypage', authMiddleware, async, (req,res) =>{
-  //   console.log('마이페이지');
-  
+  router.get('/api/user/:userId/product', authMiddleware, async (req, res) => {
+   try {
+      const {userId} = req.params;
+      const mypage = await User.findOne(userId);
+      // const {userId} = req.params;
+      // const mypage = await User.findOne({userId})
 
-  // });
+      res.json({result:true, mypage});
+   }catch(err){
+      res.json({result:false});
+   }
+
+   });
+
+
+
+
+
+
+  //마이페이지 정보수정
+  router.put('/api/user/:userId/product/modify', authMiddleware, async (req,res) =>{
+    console.log('마이페이지');
+   try{
+   const {userId} = res.locals.user;
+   const {nickname, userporfilUrl, userInfo} = req.body;
+   const modifyMypage = await User.create({
+     nickname, userporfilUrl, userInfo
+   });
+   res.json({result : true, msg : "마이페이지 수정완료"})
+  }catch(err){
+   res.json({result : true, msg : "마이페이지 수정실패"})
+  }
+    
+  });
 
   module.exports = router;
