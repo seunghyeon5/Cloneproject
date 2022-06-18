@@ -5,7 +5,7 @@ const Joi = require("joi");
 const jwt = require("jsonwebtoken")
 const authMiddelware = require("../middlewares/auth-middleware")
 const bcrypt = require("bcrypt");
-
+require("dotenv").config();
 
 
 //회원가입 양식
@@ -16,13 +16,13 @@ const postUsersSchema = Joi.object({
     nickname: Joi.string().required(),
   });
 
-
-  router.post("/user/signup", async (req, res) => {//회원가입
+//회원가입
+  router.post("/user/signup", async (req, res) => {
 
     try {
       const { email, password, confirmpassword, nickname} =
         await postUsersSchema.validateAsync(req.body);
-        console.log(req.body);
+        // console.log(req.body);
       
   
      if (password !== confirmpassword) {
@@ -31,46 +31,26 @@ const postUsersSchema = Joi.object({
         });
         return;
       }
-
-
-
-
-      const existUsers = await User.find({ 
-        $or:[{email}, {nickname}]
+      // 이메일 중복확인 버튼
+     const existEmail = await User.findOne({email});
+     console.log("지나갑니다.")
+    //  console.log(existId);
+    if (existEmail) {
+      return res.status(400).send({errorMesssage:"중복된 이메일이 존재합니다.",});
         
-    });
-    console.log(email, nickname);
-    if (existUsers.length) {
-        res.status(400).send({
-            errorMesssage:"중복된 닉네임, 또는 이메일이 존재합니다."
-        });
-        return;
-    }
-  
-
-    //  const existemail = await User.find({ email  });
+    } 
+     // 닉네임 중복확인 버튼
+     const existnicName = await User.findOne({nickname});
+     console.log("지나갑니다아~")
+     if(existnicName) {
+      return res.status(400).send({ errorMessage: "중복된 닉네임이 존재합니다.", });
+     }
+        
     
-    // // if (existemail.length) {
-    // //     res.status(400).send({
-    // //         errorMesssage:"중복된 닉네임, 또는 이메일이 존재합니다."
-    // //     });
-    // //     return;
-    // // } else {
-    // //     res.status(200).send({
-    // //         message : "사용가능한 이메일 입니다."
-    // //     })
-    // // }
-    // //    const existnickname = await User.find({nickname});
-    // // if (existnickname.length) {
-    // //     res.status(400).send({
-    // //         errorMessage:"중복된 닉네임이 존재합니다."
-    // //     });
-    // //     return;
-    // // }
-  
+   
       const users = new User({ nickname, password, email });
       await users.save();
-      console.log(users)
+      // console.log(users)
       res.status(201).send({
         message : "회원가입에 성공하셨습니다!"
       });
@@ -83,13 +63,10 @@ const postUsersSchema = Joi.object({
     }
   });
 
-  // const postAuthSchema = Joi.object({ //로그인
-  //   email: Joi.string().required(),//로그인 이메일 형식
-  //   password: Joi.string().required(),//최소 8자, 하나 이상의 문자, 하나의 숫자, 하나의 특수문자
-  // });
-  
 
-  router.post("/user/login", async (req, res) => {//로그인
+  
+// 로그인
+  router.post("/user/login", async (req, res) => {
 
         const {email, password} = req.body;
         
@@ -106,13 +83,15 @@ const postUsersSchema = Joi.object({
         }
 
         // const id = user.userId;
-        const token = jwt.sign({ userId: user.userId }, "ligthing-secret-key"); 
+        const token = jwt.sign({ userId: user.userId }, process.env.JWT_SECRET,{expiresIn: '2h',}); 
         res.status(200).send({ message: "로그인에 성공했습니다", token });
         console.log(token);
         console.log(user);
     });
 
-  router.get("/user/login/me", authMiddelware, async (req, res) => { //로그인 조회
+// 로그인 인증
+
+  router.get("/user/login/me", authMiddelware, async (req, res) => { 
 
     
    const{ user } =  res.locals;
@@ -120,5 +99,9 @@ const postUsersSchema = Joi.object({
    res.send({ userId: user.email, nickname: user.nickname});
     
   });
+
+  router.put("/user")
+
+
 
   module.exports = router;
