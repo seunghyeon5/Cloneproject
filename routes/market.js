@@ -36,7 +36,7 @@ router.get("/market", async(req, res) => {
 router.get("/market/:itemId", async (req, res) =>{
     try {
         const { itemId } = req.params;
-        const item = await Market.find({itemId})
+        const item = await Market.findOne({itemId})
 
         res.json({ result: true, item });
     }catch(err){
