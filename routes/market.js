@@ -23,7 +23,7 @@ router.post("/market", authMiddleware, async(req, res) => {
 router.get("/market", async(req, res) => {
     try{
         const { itemId } = req.params;
-        const findAllitem = await Market.find({itemId})
+        const findAllitem = await Market.find(itemId)
         res.json({ result : true, findAllitem})
     }catch(err){
         res.json({ result: false})
