@@ -5,10 +5,6 @@ const cors = require('cors');
 const userRouter = require("./routes/user");
 const likeRouter = require("./routes/like");
 const marketRouter = require("./routes/market");
-<<<<<<< HEAD
-
-=======
->>>>>>> 7a57ddc52cf808541b639f8525186e1b0e500144
 
 
 // mongoose.connect('mongodb://0.0.0.0/cloneporject', {
