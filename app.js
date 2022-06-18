@@ -5,11 +5,11 @@ const cors = require('cors');
 const userRouter = require("./routes/user");
 const likeRouter = require("./routes/like");
 const marketRouter = require("./routes/market");
-// const marketRouter = require("./routes/market");
+
 
 
 // mongoose.connect('mongodb://0.0.0.0/cloneporject', {
-mongoose.connect("mongodb+srv://test:sparta@cluster0.l2ux3.mongodb.net/THUNDERMARKET?retryWrites=true&w=majority", {
+mongoose.connect("mongodb+srv://test:sparta@cluster0.l2ux3.mongodb.net/THUNDERMARKET", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });
