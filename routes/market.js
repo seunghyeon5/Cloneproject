@@ -13,14 +13,14 @@ router.post("/market", authMiddleware, async(req, res) => {
             ImageUrl, title, price, content, count, condition, exchange, nickname
         });
         res.json ({ result : true, msg : "상품등록이 완료되었습니다.", createMarket})
-    } catch(err){
+    }catch(err){
         res.json({ result : false, mag : "상품등록이 취소되었습니다." })
         // console.log(err)
     }
 });
 
 //상품목록 조회
-router.get("/market", authMiddleware, async(req, res) => {
+router.get("/market", async(req, res) => {
     try{
         const { itemId } = req.params;
         const findAllitem = await Market.find({itemId})
