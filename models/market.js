@@ -60,14 +60,9 @@ const MarketSchema = new mongoose.Schema(
 
 MarketSchema.virtual("itemId").get(function () {
     return this._id.toHexString();
-  });
-  MarketSchema.set("toJSON", {
+});
+MarketSchema.set("toJSON", {
     virtuals: true,
-  });
-
-// async function getPostList() {
-//     return Post.find().sort({ createAt : 'desc' });;
-// }
-
+});
 
 module.exports = mongoose.model('Market', MarketSchema);
