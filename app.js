@@ -7,8 +7,8 @@ const likeRouter = require("./routes/like");
 const marketRouter = require("./routes/market");
 
 
-// mongoose.connect('mongodb://0.0.0.0/cloneporject', {
-mongoose.connect("mongodb+srv://test:sparta@cluster0.l2ux3.mongodb.net/THUNDERMARKET", {
+// mongoose.connect('mongodb://0.0.0.0/cloneporject', {   mongodb+srv://test:sparta@cluster0.l2ux3.mongodb.net/THUNDERMARKET
+mongoose.connect("mongodb+srv://wea9677:tmxkdlfl@cluster0.xmzro.mongodb.net/CloneProject", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 });
