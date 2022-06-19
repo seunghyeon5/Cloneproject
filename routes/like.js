@@ -14,16 +14,19 @@ router.get('/like/:itemId', async (req, res) => {
 router.post('/like/:itemId',authMiddleware ,async (req, res) => {
     try{                      
         const {itemId} = req.params;
-        const { userId } = res.locals.user;       
+        const { nickname } = res.locals.user;       
+        console.log("지나갑니다");
+        console.log(nickname);
         
-        const findLike = await Like.findOne({ itemId,userId }).exec();
+        const findLike = await Like.findOne({ itemId, nickname });
+        console.log(findLike);
         if(findLike){          
             //return res.status(400).send({errorMessage: "이미 좋아요를 누름"})//테스트 메세지
             return res.status(400).send({errorMessage: "fail"});
         }
         await Like.create({            
             itemId,
-            userId,
+            nickname,
           });    
           //return res.status(201).json({ like, msg: "좋아요 완료!" });     //테스트 메세지
           return res.status(201).json({result: "success" });
