@@ -1,5 +1,7 @@
 const express = require("express");
 const User = require("../models/user");
+const Like = require("../models/like");
+const Market = require("../models/market");
 const router = express.Router();
 const Joi = require("joi");
 const jwt = require("jsonwebtoken")
@@ -108,14 +110,30 @@ const postUsersSchema = Joi.object({
 
   //마이페이지
 
-  router.get('/api/user/:userId/product', authMiddleware, async (req, res) => {
-   try {
-      const {userId} = req.params;
-      const mypage = await User.findOne(userId);
-      // const {userId} = req.params;
-      // const mypage = await User.findOne({userId})
+  router.get('/user/mypage', authMiddleware, async (req, res) => {
+   
+  try {
+    
+      const {nickname, userporfilUrl, profilInfo } = res.locals.user;
+    //찜 목록  
+      const mylike = await Like.find({nickname});
+      const mypage = mylike.map((a) => ({
+            itemId : a.itemId,}));
+    //내가 등록한 상품
+    
+    const mypost = await Market.find({nickname});
+      const mypostDNO = mypost.map((b) => ({
+            itemId : b.itemId,}));
+      // console.log(myitems)  userporfilUrl, profilInfo
+      res.json({result:true, 
+        mypage,
+        mypostDNO,
+        nickname,
+        profilInfo,
+        userporfilUrl,
+        });
 
-      res.json({result:true, mypage});
+
    }catch(err){
       res.json({result:false});
    }
@@ -127,19 +145,16 @@ const postUsersSchema = Joi.object({
 
 
 
-  //마이페이지 정보수정
-  router.put('/api/user/:userId/product/modify', authMiddleware, async (req,res) =>{
-    console.log('마이페이지');
+  //마이페이지 정보수정 
+  router.put('/api/user/mypage/modify', authMiddleware, async (req,res) =>{
    try{
-   const {userId} = res.locals.user;
-   const {nickname, userporfilUrl, userInfo} = req.body;
-   const modifyMypage = await User.create({
-     nickname, userporfilUrl, userInfo
-   });
-   res.json({result : true, msg : "마이페이지 수정완료"})
-  }catch(err){
-   res.json({result : true, msg : "마이페이지 수정실패"})
-  }
+       
+
+   }catch(err){
+
+
+   }
+   
     
   });
 
