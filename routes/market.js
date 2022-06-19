@@ -1,5 +1,6 @@
 const express = require('express');
 const Market = require("../models/market")
+const User = require("../models/user");
 const moment = require("moment");
 const authMiddleware = require("../middlewares/auth-middleware")
 const router = express.Router()
@@ -8,14 +9,14 @@ const router = express.Router()
 
 router.post("/market", authMiddleware, async(req, res) => {
     try {
-        const { userId } = res.locals.user;
+        const { nickname } = res.locals.user;
         const { ImageUrl, title, price, content, count, condition, exchange} = req.body;
         const createMarket = await Market.create({
-            ImageUrl, title, price, content, count, condition, exchange, userId,
+            ImageUrl, title, price, content, count, condition, exchange, nickname
         });
         //res.json ({ result : true, msg : "상품등록이 완료되었습니다.", createMarket}) //test 출력
         res.json ({ result : true, msg : "상품등록이 완료되었습니다."});
-    }catch(err){
+   }catch(err){
         res.json({ result : false, mag : "상품등록이 취소되었습니다." })
         // console.log(err)
     }
@@ -34,6 +35,8 @@ router.get("/market/list", async(req, res) =>{
         title : a.title,
         price : a.price,
         createdAt : a.createdAt.toLocaleTimeString('ko-KR'),
+        itemId : a.itemId,
+        
         })),
         
 
@@ -82,6 +85,7 @@ router.get("/market/:search/:sort",  async(req, res) => {
             title : a.title,
             price : a.price,
             createdAt : a.createdAt.toLocaleDateString('ko-KR')+a.createdAt.toLocaleTimeString('ko-KR'),
+            
             }))
         });
         
@@ -95,15 +99,15 @@ router.get("/market/:search/:sort",  async(req, res) => {
 //상품정보 상세조회
 
 router.get("/market/:itemId", async (req, res) =>{
-    try {
+    //try {
         const { itemId } = req.params;
-        const item = await Market.findOne({itemId})
+        const item = await Market.findById(itemId)
 
         res.json({ result: true, item });
-    }catch(err){
-        res.json({ result : false })
+    //}catch(err){
+      //  res.json({ result : false })
         // console.log(err)
-    }
+    //}
  });
  
  
