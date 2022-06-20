@@ -37,7 +37,7 @@ const postUsersSchema = Joi.object({
       }
       // 이메일 중복확인 버튼
      const existEmail = await User.findOne({email});
-     console.log("지나갑니다.")
+    //  console.log("지나갑니다.")
     //  console.log(existId);
     if (existEmail) {
       return res.status(400).send({errorMesssage:"중복된 이메일이 존재합니다.",});
@@ -45,7 +45,7 @@ const postUsersSchema = Joi.object({
     } 
      // 닉네임 중복확인 버튼
      const existnicName = await User.findOne({nickname});
-     console.log("지나갑니다아~")
+    //  console.log("지나갑니다아~")
      if(existnicName) {
       return res.status(400).send({ errorMessage: "중복된 닉네임이 존재합니다.", });
      }
@@ -54,8 +54,8 @@ const postUsersSchema = Joi.object({
    
       const users = new User({ nickname, password, email, userprofileUrl });
       await users.save();
-      // console.log(users)
-      res.status(201).send({
+      console.log(users)
+      res.json({users,
         message : "회원가입에 성공하셨습니다!"
       });
     } catch (error) {
@@ -146,14 +146,15 @@ const postUsersSchema = Joi.object({
 
 
   //마이페이지 정보수정 
-  router.put('/api/user/mypage/modify', authMiddleware, async (req,res) =>{
+  router.put('/user/mypage/:userId/modify', authMiddleware, async (req,res) =>{
   //  try{
-     const { nickname, userprofileUrl, userInfo } = req.body;  
+     const {userId} = req.params;
+     const { nickname, userInfo, userprofileUrl } = req.body; 
 
-     User.findOneAndUpdate({nickname, userprofileUrl, userInfo});
-
-     res.json({result : true, msg :"수정 완료", nickname, userprofileUrl, userInfo })
-
+     const mypagemodifiy = await User.findByIdAndUpdate(userId, {$set : {nickname, userInfo, userprofileUrl}})
+     console.log(mypagemodifiy);
+     res.json({result : true, msg :"수정 완료", mypagemodifiy})
+     
   //  }catch(err){
   //   res.json({result : false});
 
