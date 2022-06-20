@@ -11,21 +11,21 @@ require("dotenv").config();
 
 
 //회원가입 양식
-// const postUsersSchema = Joi.object({
+const postUsersSchema = Joi.object({
   
-//     email: Joi.string().required().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }), //이메일 형식 'com','net'만 허용
-//     password: Joi.string().required().pattern(new RegExp('^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{6,}$')), //최소6자, 하나 이상의 영문자, 하나의 숫자, 하나의 특수문자
-//     confirmpassword: Joi.string().required(),
-//     nickname: Joi.string().required(),
-//     userprofileUrl : Joi.string().options({ presence: 'required' }).required(),
-//   });
+    email: Joi.string().required().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }), //이메일 형식 'com','net'만 허용
+    password: Joi.string().required().pattern(new RegExp('^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{6,}$')), //최소6자, 하나 이상의 영문자, 하나의 숫자, 하나의 특수문자
+    confirmpassword: Joi.string().required(),
+    nickname: Joi.string().required(),
+    userprofileUrl : Joi.string().options({ presence: 'required' }).required(),
+  });
 
 //회원가입
   router.post("/user/signup", async (req, res) => {
 
       try {
-      const { email, password, confirmpassword, nickname, userprofileUrl} = req.body;
-        //  await postUsersSchema.validateAsync(req.body);
+      const { email, password, confirmpassword, nickname, userprofileUrl} = //req.body;
+         await postUsersSchema.validateAsync(req.body);
         // console.log(req.body);
       
   
