@@ -109,7 +109,7 @@ router.get("/market/:search/:sort",  async(req, res) => {
             ImageUrl : a.ImageUrl,
             title : a.title,
             price : a.price,
-            createdAt : a.createdAt.toLocaleDateString('ko-KR')+a.createdAt.toLocaleTimeString('ko-KR'),
+            createdAt : timeSince(a.createdAt),
             
             }))
         });
@@ -124,15 +124,15 @@ router.get("/market/:search/:sort",  async(req, res) => {
 //상품정보 상세조회
 
 router.get("/market/:itemId", async (req, res) =>{
-    //try {
+    try {
         const { itemId } = req.params;
-        const item = await Market.findById(itemId)
-
-        res.json({ result: true, item });
-    //}catch(err){
-      //  res.json({ result : false })
-        // console.log(err)
-    //}
+        const item = await Market.findById(itemId);
+        const period = timeSince(item.createdAt);        
+        res.json({  item ,period:period})            
+    }catch(err){
+       res.json({ result : false })
+        console.log(err)
+    }
  });
  
  
