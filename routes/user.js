@@ -17,7 +17,7 @@ require("dotenv").config();
 //     password: Joi.string().required().pattern(new RegExp('^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{6,}$')), //최소6자, 하나 이상의 영문자, 하나의 숫자, 하나의 특수문자
 //     confirmpassword: Joi.string().required(),
 //     nickname: Joi.string().required(),
-//     userprofileUrl : Joi.string().required(),
+//     userprofileUrl : Joi.string().options({ presence: 'required' }).required(),
 //   });
 
 //회원가입
