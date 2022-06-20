@@ -23,9 +23,9 @@ require("dotenv").config();
 //회원가입
   router.post("/user/signup", async (req, res) => {
 
-     try {
-      const { email, password, confirmpassword, nickname, userprofileUrl} = //req.body;
-         await postUsersSchema.validateAsync(req.body);
+      try {
+      const { email, password, confirmpassword, nickname, userprofileUrl} = req.body;
+        //  await postUsersSchema.validateAsync(req.body);
         // console.log(req.body);
       
   
