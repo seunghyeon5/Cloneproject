@@ -12,10 +12,7 @@ const marketRouter = require("./routes/market");
     // credentials: true,
 
 
-app.use(cors({ // CORS 모듈 실행
-        origin: "http://localhost:3000", // 출처 허용 옵션 (전부 허용)
-        credential: 'true' // 사용자 인증이 필요한 리소스(쿠키 ..등) 접근
-    }));
+
 
 // mongoose.connect('mongodb://0.0.0.0/cloneporject', {   mongodb+srv://test:sparta@cluster0.l2ux3.mongodb.net/THUNDERMARKET
 mongoose.connect("mongodb+srv://wea9677:tmxkdlfl@cluster0.xmzro.mongodb.net/CloneProject", {
@@ -30,7 +27,10 @@ const app = express();
 
 app.use(express.json());
 
-app.use(cors());
+app.use(cors({ // CORS 모듈 실행
+    origin: "http://localhost:3000", // 출처 허용 옵션 (전부 허용)
+    credential: 'true' // 사용자 인증이 필요한 리소스(쿠키 ..등) 접근
+}));
 
 
 app.use('/api', express.urlencoded({ extended: false }),[userRouter,likeRouter, marketRouter]);
@@ -38,6 +38,8 @@ app.use('/api', express.urlencoded({ extended: false }),[userRouter,likeRouter, 
 app.get('/', (req, res) =>{
     res.send('클론코딩 테스트 페이지')
 });
+
+
 
 
 app.listen(port, () => {
