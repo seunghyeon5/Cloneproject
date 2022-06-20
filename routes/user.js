@@ -17,14 +17,14 @@ const postUsersSchema = Joi.object({
     password: Joi.string().required().pattern(new RegExp('^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{6,}$')), //최소6자, 하나 이상의 영문자, 하나의 숫자, 하나의 특수문자
     confirmpassword: Joi.string().required(),
     nickname: Joi.string().required(),
-    userporfilUrl : Joi.string().required(),
+    userprofileUrl : Joi.string().required(),
   });
 
 //회원가입
   router.post("/user/signup", async (req, res) => {
 
     try {
-      const { email, password, confirmpassword, nickname, userporfilUrl} =
+      const { email, password, confirmpassword, nickname, userprofileUrl} =
         await postUsersSchema.validateAsync(req.body);
         // console.log(req.body);
       
@@ -52,7 +52,7 @@ const postUsersSchema = Joi.object({
         
     
    
-      const users = new User({ nickname, password, email, userporfilUrl });
+      const users = new User({ nickname, password, email, userprofileUrl });
       await users.save();
       // console.log(users)
       res.status(201).send({
@@ -114,7 +114,7 @@ const postUsersSchema = Joi.object({
    
   try {
     
-      const {nickname, userporfilUrl, profilInfo } = res.locals.user;
+      const {nickname, userprofileUrl, profilInfo } = res.locals.user;
     //찜 목록  
       const mylike = await Like.find({nickname});
       const mypage = mylike.map((a) => ({
@@ -130,7 +130,7 @@ const postUsersSchema = Joi.object({
         mypostDNO,
         nickname,
         profilInfo,
-        userporfilUrl,
+        userprofileUrl,
         });
 
 
