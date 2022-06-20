@@ -114,7 +114,7 @@ const postUsersSchema = Joi.object({
    
   try {
     
-      const {nickname, userprofileUrl, profilInfo } = res.locals.user;
+      const {nickname, userprofileUrl, userInfo } = res.locals.user;
     //찜 목록  
       const mylike = await Like.find({nickname});
       const mypage = mylike.map((a) => ({
@@ -129,7 +129,7 @@ const postUsersSchema = Joi.object({
         mypage,
         mypostDNO,
         nickname,
-        profilInfo,
+        userInfo,
         userprofileUrl,
         });
 
@@ -148,7 +148,9 @@ const postUsersSchema = Joi.object({
   //마이페이지 정보수정 
   router.put('/api/user/mypage/modify', authMiddleware, async (req,res) =>{
    try{
-       
+     const { nickname, userprofileUrl, userInfo } = req.body;  
+
+
 
    }catch(err){
 
