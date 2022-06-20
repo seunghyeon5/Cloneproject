@@ -5,6 +5,35 @@ const moment = require("moment");
 const authMiddleware = require("../middlewares/auth-middleware")
 const router = express.Router()
 
+//time ago 상품 등록으로 부터 지난 시간 구해주는 함수
+function timeSince(date) {
+
+    let seconds = Math.floor((new Date() - date) / 1000);
+  
+    let interval = seconds / 31536000;
+  
+    if (interval > 1) {
+      return Math.floor(interval) + "년 전";
+    }
+    interval = seconds / 2592000;
+    if (interval > 1) {
+      return Math.floor(interval) + "달 전";
+    }
+    interval = seconds / 86400;
+    if (interval > 1) {
+      return Math.floor(interval) + "일 전";
+    }
+    interval = seconds / 3600;
+    if (interval > 1) {
+      return Math.floor(interval) + "시간 전";
+    }
+    interval = seconds / 60;
+    if (interval > 1) {
+      return Math.floor(interval) + "분 전";
+    }
+    return Math.floor(seconds) + "초 전";
+  }
+
 //상품 등록하기
 
 router.post("/market", authMiddleware, async(req, res) => {
@@ -22,29 +51,25 @@ router.post("/market", authMiddleware, async(req, res) => {
     }
 });
 
-//검색 상품 목록 조회 
-router.get("/market/list", async(req, res) =>{
-    const Items = await Market.find().sort({createdAt :'desc'});
-    
-    
-    
-    
-    res.send({
-        Items : Items.map((a) => ({
-        ImageUrl : a.ImageUrl,
-        title : a.title,
-        price : a.price,
-        createdAt : a.createdAt.toLocaleTimeString('ko-KR'),
-        itemId : a.itemId,
-        
-        })),
-        
-
-    });
-
+//상품 전체 목록 조회 
+router.get("/market/list", async(req, res) =>{      
+    try {
+        const Items = await Market.find().sort({createdAt :'desc'});    
+        res.json({
+            Items : Items.map((a) => ({
+            ImageUrl : a.ImageUrl,
+            title : a.title,
+            price : a.price,
+            createdAt : timeSince(a.createdAt),
+            itemId : a.itemId,        
+            })),           
+        });       
+    }catch(err){
+       res.json({ result : false })
+        console.log(err)
+    }
+   
 });
-
-
 
 // 상품 검색 조회 API
 router.get("/market/:search/:sort",  async(req, res) => {
@@ -84,7 +109,7 @@ router.get("/market/:search/:sort",  async(req, res) => {
             ImageUrl : a.ImageUrl,
             title : a.title,
             price : a.price,
-            createdAt : a.createdAt.toLocaleDateString('ko-KR')+a.createdAt.toLocaleTimeString('ko-KR'),
+            createdAt : timeSince(a.createdAt),
             
             }))
         });
@@ -99,15 +124,15 @@ router.get("/market/:search/:sort",  async(req, res) => {
 //상품정보 상세조회
 
 router.get("/market/:itemId", async (req, res) =>{
-    //try {
+    try {
         const { itemId } = req.params;
-        const item = await Market.findById(itemId)
-
-        res.json({ result: true, item });
-    //}catch(err){
-      //  res.json({ result : false })
-        // console.log(err)
-    //}
+        const item = await Market.findById(itemId);
+        const period = timeSince(item.createdAt);        
+        res.json({  item ,period:period})            
+    }catch(err){
+       res.json({ result : false })
+        console.log(err)
+    }
  });
  
  
