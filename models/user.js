@@ -21,11 +21,11 @@ const UserSchema = new mongoose.Schema({
         required: true,
     },
 
-    userporfilUrl : {
+    userprofileUrl : {
         type : String
     },
 
-    profilInfo : {
+    userInfo : {
       type: String
   }
 

@@ -11,21 +11,21 @@ require("dotenv").config();
 
 
 //회원가입 양식
-const postUsersSchema = Joi.object({
+// const postUsersSchema = Joi.object({
   
-    email: Joi.string().required().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }), //이메일 형식 'com','net'만 허용
-    password: Joi.string().required().pattern(new RegExp('^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{6,}$')), //최소6자, 하나 이상의 영문자, 하나의 숫자, 하나의 특수문자
-    confirmpassword: Joi.string().required(),
-    nickname: Joi.string().required(),
-    userporfilUrl : Joi.string().required(),
-  });
+//     email: Joi.string().required().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }), //이메일 형식 'com','net'만 허용
+//     password: Joi.string().required().pattern(new RegExp('^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{6,}$')), //최소6자, 하나 이상의 영문자, 하나의 숫자, 하나의 특수문자
+//     confirmpassword: Joi.string().required(),
+//     nickname: Joi.string().required(),
+//     userprofileUrl : Joi.string().required(),
+//   });
 
 //회원가입
   router.post("/user/signup", async (req, res) => {
 
-    try {
-      const { email, password, confirmpassword, nickname, userporfilUrl} =
-        await postUsersSchema.validateAsync(req.body);
+      try {
+      const { email, password, confirmpassword, nickname, userprofileUrl} = req.body;
+        //  await postUsersSchema.validateAsync(req.body);
         // console.log(req.body);
       
   
@@ -37,7 +37,7 @@ const postUsersSchema = Joi.object({
       }
       // 이메일 중복확인 버튼
      const existEmail = await User.findOne({email});
-     console.log("지나갑니다.")
+    //  console.log("지나갑니다.")
     //  console.log(existId);
     if (existEmail) {
       return res.status(400).send({errorMesssage:"중복된 이메일이 존재합니다.",});
@@ -45,17 +45,17 @@ const postUsersSchema = Joi.object({
     } 
      // 닉네임 중복확인 버튼
      const existnicName = await User.findOne({nickname});
-     console.log("지나갑니다아~")
+    //  console.log("지나갑니다아~")
      if(existnicName) {
       return res.status(400).send({ errorMessage: "중복된 닉네임이 존재합니다.", });
      }
         
     
    
-      const users = new User({ nickname, password, email, userporfilUrl });
+      const users = new User({ nickname, password, email, userprofileUrl });
       await users.save();
-      // console.log(users)
-      res.status(201).send({
+      console.log(users)
+      res.json({users,
         message : "회원가입에 성공하셨습니다!"
       });
     } catch (error) {
@@ -114,10 +114,10 @@ const postUsersSchema = Joi.object({
    
   try {
     
-      const {nickname, userporfilUrl, profilInfo } = res.locals.user;
+      const {nickname, userprofileUrl, userInfo } = res.locals.user;
     //찜 목록  
-      const mylike = await Like.find({nickname});
-      const mypage = mylike.map((a) => ({
+      const mypage = await Like.find({nickname});
+      const mylike = mypage.map((a) => ({
             itemId : a.itemId,}));
     //내가 등록한 상품
     
@@ -126,11 +126,11 @@ const postUsersSchema = Joi.object({
             itemId : b.itemId,}));
       // console.log(myitems)  userporfilUrl, profilInfo
       res.json({result:true, 
-        mypage,
+        mylike,
         mypostDNO,
         nickname,
-        profilInfo,
-        userporfilUrl,
+        userInfo,
+        userprofileUrl,
         });
 
 
@@ -146,14 +146,25 @@ const postUsersSchema = Joi.object({
 
 
   //마이페이지 정보수정 
-  router.put('/api/user/mypage/modify', authMiddleware, async (req,res) =>{
-   try{
-       
+  router.put('/user/mypage/:userId/modify', authMiddleware, async (req,res) =>{
+  //  try{
+     const {userId} = req.params;
+     const { nickname, userInfo, userprofileUrl } = req.body; 
 
-   }catch(err){
+     const existnicName = await User.findOne({nickname});
+    //  console.log("지나갑니다아~")
+     if(existnicName) {
+      return res.status(400).send({ errorMessage: "중복된 닉네임이 존재합니다.", });
+     }
 
+     const mypagemodifiy = await User.findByIdAndUpdate(userId, {$set : {nickname, userInfo, userprofileUrl}})
+     console.log(mypagemodifiy);
+     res.json({result : true, msg :"수정 완료", mypagemodifiy})
+     
+  //  }catch(err){
+  //   res.json({result : false});
 
-   }
+  //  }
    
     
   });
