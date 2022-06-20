@@ -101,7 +101,7 @@ const postUsersSchema = Joi.object({
    const{ user } =  res.locals;
    
    
-   res.send({ userId: user.email, nickname: user.nickname, userInfo : user.userId});
+   res.send({ userId: User.email, nickname: User.nickname, userInfo : User.userId, user});
    console.log(res.locals);
   });
 
@@ -165,8 +165,31 @@ const postUsersSchema = Joi.object({
   //   res.json({result : false});
 
   //  }
-   
     
   });
+  router.put('/user/mypage/:userId/info', authMiddleware, async (req, res) =>{
+   try {
+       const {userId} = req.params;
+       const {userInfo} = req.body;
+       
+       const mypageinfo = await User.findByIdAndUpdate(userId, {$set:{userInfo}});
+       res.json({result : true, msg : "작성 완료", mypageinfo});
+   } catch (error) {
+      res.json({result : false});
+   }
+  });
+
+  router.put('/user/mypage/:userId/profileimg', authMiddleware, async (req, res) =>{
+    try {
+        const {userId} = req.params;
+        const {userprofileUrl} = req.body;
+        
+        const mypageimg = await User.findByIdAndUpdate(userId, {$set:{userprofileUrl}});
+        res.json({result : true, msg : "작성 완료", mypageimg});
+    } catch (error) {
+       res.json({result : false});
+    }
+   })
+   
 
   module.exports = router;
