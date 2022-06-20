@@ -116,8 +116,8 @@ const postUsersSchema = Joi.object({
     
       const {nickname, userprofileUrl, userInfo } = res.locals.user;
     //찜 목록  
-      const mylike = await Like.find({nickname});
-      const mypage = mylike.map((a) => ({
+      const mypage = await Like.find({nickname});
+      const mylike = mypage.map((a) => ({
             itemId : a.itemId,}));
     //내가 등록한 상품
     
@@ -126,7 +126,7 @@ const postUsersSchema = Joi.object({
             itemId : b.itemId,}));
       // console.log(myitems)  userporfilUrl, profilInfo
       res.json({result:true, 
-        mypage,
+        mylike,
         mypostDNO,
         nickname,
         userInfo,
@@ -147,15 +147,17 @@ const postUsersSchema = Joi.object({
 
   //마이페이지 정보수정 
   router.put('/api/user/mypage/modify', authMiddleware, async (req,res) =>{
-   try{
+  //  try{
      const { nickname, userprofileUrl, userInfo } = req.body;  
 
+     User.findOneAndUpdate({nickname, userprofileUrl, userInfo});
 
+     res.json({result : true, msg :"수정 완료", nickname, userprofileUrl, userInfo })
 
-   }catch(err){
+  //  }catch(err){
+  //   res.json({result : false});
 
-
-   }
+  //  }
    
     
   });
