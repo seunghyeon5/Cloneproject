@@ -7,6 +7,16 @@ const likeRouter = require("./routes/like");
 const marketRouter = require("./routes/market");
 
 
+    // origin: 
+    // ["http://localhost:3000"],
+    // credentials: true,
+
+
+app.use(cors({ // CORS 모듈 실행
+        origin: "http://localhost:3000", // 출처 허용 옵션 (전부 허용)
+        credential: 'true' // 사용자 인증이 필요한 리소스(쿠키 ..등) 접근
+    }));
+
 // mongoose.connect('mongodb://0.0.0.0/cloneporject', {   mongodb+srv://test:sparta@cluster0.l2ux3.mongodb.net/THUNDERMARKET
 mongoose.connect("mongodb+srv://wea9677:tmxkdlfl@cluster0.xmzro.mongodb.net/CloneProject", {
     useNewUrlParser: true,
