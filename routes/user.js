@@ -17,13 +17,13 @@ const postUsersSchema = Joi.object({
     password: Joi.string().required().pattern(new RegExp('^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{6,}$')), //최소6자, 하나 이상의 영문자, 하나의 숫자, 하나의 특수문자
     confirmpassword: Joi.string().required(),
     nickname: Joi.string().required(),
-    userprofileUrl : Joi.string()
+    userprofileUrl : Joi.string().required(),
   });
 
 //회원가입
   router.post("/user/signup", async (req, res) => {
 
-    // try {
+     try {
       const { email, password, confirmpassword, nickname, userprofileUrl} = //req.body;
          await postUsersSchema.validateAsync(req.body);
         // console.log(req.body);
@@ -58,13 +58,13 @@ const postUsersSchema = Joi.object({
       res.json({users,
         message : "회원가입에 성공하셨습니다!"
       });
-    // } catch (error) {
-    //   res.status(400).send({
-    //     errorMesssage: "요청한 데이터 형식이 올바르지 않습니다.",
+    } catch (error) {
+      res.status(400).send({
+        errorMesssage: "요청한 데이터 형식이 올바르지 않습니다.",
         
-    //   });
-    //   // console.log(error)
-    // }
+      });
+      // console.log(error)
+    }
   });
 
 
