@@ -17,21 +17,21 @@ const MarketSchema = new mongoose.Schema(
         },
 
         condition : {
-            type : String,
+            type : Boolean,
             required:true,
             trim : true
 
         },
 
         exchange : {
-            type : String,
+            type : Boolean,
             required:true,
             trim : true
 
         },
 
         price : {
-            type : Number,
+            type : String,
             required:true,
             trim : true
 
