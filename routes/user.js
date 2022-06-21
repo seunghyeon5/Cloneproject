@@ -149,7 +149,7 @@ const postUsersSchema = Joi.object({
   
   
   //마이페이지 닉네임 수정
-  router.post('/user/mypage/nickname/:nickname', authMiddleware, async (req,res) =>{
+  router.put('/user/mypage/nickname', authMiddleware, async (req,res) =>{
      try{
        const {userId} = res.locals.user
        const { nickname }  = req.body; 
