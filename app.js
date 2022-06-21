@@ -1,11 +1,20 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const port = 8080;
 const cors = require('cors');
 const userRouter = require("./routes/user");
 const likeRouter = require("./routes/like");
 const marketRouter = require("./routes/market");
+require("dotenv").config();
+const SERVER_PORT = process.env.PORT;
+//socket 통신을 위한 테스트 코드  1:23분 까지
 
+//socket tag
+const io = require('socket.io')(8900,{
+    cors:{
+        origin: 'http://localhost:3000',
+    },
+});
+//
 
     // origin: 
     // ["http://localhost:3000"],
@@ -41,9 +50,13 @@ app.get('/', (req, res) =>{
     res.send('클론코딩 테스트 페이지')
 });
 
+//socket 통신을 위한 테스트 코드  1:23분 까지
+//socket tag
+io.on("connection",(socket)=>{
+    console.log("a user connected.")
+})
+//
 
-
-
-app.listen(port, () => {
-    console.log(port, '포트로 서버가 켜졌어요!')
+app.listen(SERVER_PORT, () => {
+    console.log(SERVER_PORT, '포트로 서버가 켜졌어요!')
 });
