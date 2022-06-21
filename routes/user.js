@@ -117,8 +117,8 @@ const postUsersSchema = Joi.object({
       const {nickname, userprofileUrl, userInfo } = res.locals.user;
     //찜 목록  
       const mypage = await Like.find({nickname});
-      const mylike = mypage.map((a) => ({
-            itemId : a.itemId,}));
+      // const mylike = mypage.map((a) => ({
+      //       itemId : a.itemId,}));
     //내가 등록한 상품
     
     const mypost = await Market.find({nickname});
@@ -126,7 +126,7 @@ const postUsersSchema = Joi.object({
             itemId : b.itemId,}));
       // console.log(myitems)  userporfilUrl, profilInfo
       res.json({result:true, 
-        mylike,
+        mypage,
         mypostDNO,
         nickname,
         userInfo,
@@ -149,9 +149,9 @@ const postUsersSchema = Joi.object({
   
   
   //마이페이지 닉네임 수정
-  router.put('/user/mypage/:userId/nickname', authMiddleware, async (req,res) =>{
+  router.put('/user/mypage/nickname', authMiddleware, async (req,res) =>{
      try{
-       const {userId} = req.params;
+       const {userId} = res.locals.user
        const { nickname } = req.body; 
   
        const existnicName = await User.findOne({nickname});
@@ -160,7 +160,7 @@ const postUsersSchema = Joi.object({
         return res.status(400).send({ errorMessage: "중복된 닉네임이 존재합니다.", });
        }
   
-       const mypagemodifiy = await User.findByIdAndUpdate(userId, {$set : {nickname}})
+       const mypagemodifiy = await User.findByIdAndUpdate(userId, { $set : {nickname}})
        console.log(mypagemodifiy);
        res.json({result : true, msg :"수정 완료", mypagemodifiy})
        
@@ -193,9 +193,9 @@ const postUsersSchema = Joi.object({
   // });
 
   //마이페이지 소개글 수정
-  router.put('/user/mypage/:userId/info', authMiddleware, async (req, res) =>{
+  router.put('/user/mypage/info', authMiddleware, async (req, res) =>{
    try {
-       const {userId} = req.params;
+       const {userId} = res.locals.user
        const {userInfo} = req.body;
        
        const mypageinfo = await User.findByIdAndUpdate(userId, {$set:{userInfo}});
@@ -207,9 +207,9 @@ const postUsersSchema = Joi.object({
 
 
   //마이페이지 프로필 이미지 수정
-  router.put('/user/mypage/:userId/profileimg', authMiddleware, async (req, res) =>{
+  router.put('/user/mypage/profileimg', authMiddleware, async (req, res) =>{
     try {
-        const {userId} = req.params;
+        const {userId} = res.locals.user
         const {userprofileUrl} = req.body;
         
         const mypageimg = await User.findByIdAndUpdate(userId, {$set:{userprofileUrl}});
