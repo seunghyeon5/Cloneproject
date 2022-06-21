@@ -36,7 +36,7 @@ function timeSince(date) {
 
 //상품 등록하기
 
-router.post("/market", authMiddleware, async(req, res) => {
+router.post("/", authMiddleware, async(req, res) => {
     try {
         const { nickname } = res.locals.user;
         const { ImageUrl, title, price, content, count, condition, exchange} = req.body;
@@ -52,7 +52,7 @@ router.post("/market", authMiddleware, async(req, res) => {
 });
 
 //상품 전체 목록 조회 
-router.get("/market/list", async(req, res) =>{      
+router.get("/list", async(req, res) =>{      
     try {
         const Items = await Market.find().sort({createdAt :'desc'});    
         res.json({
@@ -72,7 +72,7 @@ router.get("/market/list", async(req, res) =>{
 });
 
 // 상품 검색 조회 API
-router.get("/market/:search/:sort",  async(req, res) => {
+router.get("/:search/:sort",  async(req, res) => {
     try{
         const {search,sort} = req.params;
         //const {type}=req.query;
@@ -123,7 +123,7 @@ router.get("/market/:search/:sort",  async(req, res) => {
 
 //상품정보 상세조회
 
-router.get("/market/:itemId", async (req, res) =>{
+router.get("/:itemId", async (req, res) =>{
     try {
         const { itemId } = req.params;
         const item = await Market.findById(itemId);
@@ -138,7 +138,7 @@ router.get("/market/:itemId", async (req, res) =>{
  
  //상품등록 수정
  
- router.put("/market/:itemId/modify", authMiddleware, async (req, res)=> {
+ router.put("/:itemId/modify", authMiddleware, async (req, res)=> {
 
     try{
         const { userId } = res.locals.user;
@@ -158,7 +158,7 @@ router.get("/market/:itemId", async (req, res) =>{
   });
  
  //상품 등록 삭제
- router.delete("/market/:itemId/delete", authMiddleware, async (req, res)=>{
+ router.delete("/:itemId/delete", authMiddleware, async (req, res)=>{
     
     try{
         const { userId } = res.locals.user;
