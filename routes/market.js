@@ -57,7 +57,7 @@ router.get("/list", async(req, res) =>{
         const Items = await Market.find().sort({createdAt :'desc'});    
         res.json({
             Items : Items.map((a) => ({
-            ImageUrl : a.ImageUrl,
+            imageUrl : a.imageUrl,
             title : a.title,
             price : a.price,
             createdAt : timeSince(a.createdAt),
@@ -106,7 +106,7 @@ router.get("/:search/:sort",  async(req, res) => {
         
         res.json({
             findAllitem : findAllitem.map((a) => ({
-            ImageUrl : a.ImageUrl,
+            imageUrl : a.imageUrl,
             title : a.title,
             price : a.price,
             createdAt : timeSince(a.createdAt),
