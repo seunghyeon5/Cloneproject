@@ -44,6 +44,11 @@ const MarketSchema = new mongoose.Schema(
 
         },
 
+        location : {
+            type : String,
+            
+        },
+
         count : {
             type : Number,
             required:true,

@@ -31,7 +31,7 @@ const postUsersSchema = Joi.object({
   
      if (password !== confirmpassword) {
         res.status(400).send({
-          errorMesssage: "패스워드와 패스워드 확인란이 동일하지 않습니다.",
+          errorMessage: "패스워드와 패스워드 확인란이 동일하지 않습니다.",
         });
         return;
       }
@@ -40,7 +40,7 @@ const postUsersSchema = Joi.object({
     //  console.log("지나갑니다.")
     //  console.log(existId);
     if (existEmail) {
-      return res.status(400).send({errorMesssage:"중복된 이메일이 존재합니다.",});
+      return res.status(400).send({errorMessage:"중복된 이메일이 존재합니다.",});
         
     } 
      // 닉네임 중복확인 버튼
@@ -60,7 +60,7 @@ const postUsersSchema = Joi.object({
       });
     } catch (error) {
       res.status(400).send({
-        errorMesssage: "요청한 데이터 형식이 올바르지 않습니다.",
+        errorMessage: "요청한 데이터 형식이 올바르지 않습니다.",
         
       });
       // console.log(error)
@@ -87,7 +87,7 @@ const postUsersSchema = Joi.object({
         }
 
         // const id = user.userId;
-        const token = jwt.sign({ userId: user.userId }, process.env.JWT_SECRET, {expiresIn: '2h',}); 
+        const token = jwt.sign({ userId: user.userId }, process.env.JWT_SECRET, {expiresIn: '24h',}); 
         res.status(200).send({ message: "로그인에 성공했습니다", token });
         console.log(token);
         console.log(user);

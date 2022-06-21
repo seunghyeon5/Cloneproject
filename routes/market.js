@@ -39,9 +39,9 @@ function timeSince(date) {
 router.post("/", authMiddleware, async(req, res) => {
     try {
         const { nickname } = res.locals.user;
-        const { ImageUrl, title, price, content, count, condition, exchange} = req.body;
-        const createMarket = await Market.create({
-            ImageUrl, title, price, content, count, condition, exchange, nickname
+        const { ImageUrl, title, price, content, count, condition, exchange, location} = req.body;
+        await Market.create({
+            ImageUrl, title, price, content, count, condition, exchange, nickname, location
         });
         //res.json ({ result : true, msg : "상품등록이 완료되었습니다.", createMarket}) //test 출력
         res.json ({ result : true, msg : "상품등록이 완료되었습니다."});
@@ -49,7 +49,7 @@ router.post("/", authMiddleware, async(req, res) => {
         res.json({ result : false, mag : "상품등록이 취소되었습니다." })
         // console.log(err)
     }
-});
+ });
 
 //상품 전체 목록 조회 
 router.get("/list", async(req, res) =>{      
