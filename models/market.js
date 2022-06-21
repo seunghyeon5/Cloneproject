@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const moment = require("moment");
 const MarketSchema = new mongoose.Schema(
     {
-        ImageUrl : {
+        imageUrl : {
             type : String,
             required:true,
             trim : true
@@ -46,7 +46,7 @@ const MarketSchema = new mongoose.Schema(
 
         location : {
             type : String,
-            
+
         },
 
         count : {
