@@ -37,7 +37,7 @@ function timeSince(date) {
 //상품 등록하기
 
 router.post("/", authMiddleware, async(req, res) => {
-    try {
+  //  try {
         const { nickname } = res.locals.user;
         const { ImageUrl, title, price, content, count, condition, exchange} = req.body;
         const createMarket = await Market.create({
@@ -45,11 +45,11 @@ router.post("/", authMiddleware, async(req, res) => {
         });
         //res.json ({ result : true, msg : "상품등록이 완료되었습니다.", createMarket}) //test 출력
         res.json ({ result : true, msg : "상품등록이 완료되었습니다."});
-   }catch(err){
-        res.json({ result : false, mag : "상품등록이 취소되었습니다." })
-        // console.log(err)
-    }
-});
+//    }catch(err){
+//         res.json({ result : false, mag : "상품등록이 취소되었습니다." })
+//         // console.log(err)
+//     }
+ });
 
 //상품 전체 목록 조회 
 router.get("/list", async(req, res) =>{      
