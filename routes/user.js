@@ -162,10 +162,10 @@ const postUsersSchema = Joi.object({
   
        const mypagemodifiy = await User.findByIdAndUpdate(userId, { $set : {nickname}})
        console.log(mypagemodifiy);
-       res.json({result : true, msg :"수정 완료", mypagemodifiy})
+       res.status(200).send({result : true, message :"수정 완료"})
        
      }catch(err){
-       res.json({result : false});
+      res.status(400).send({result : false, errorMessage: "닉네임 수정 실패.",});
   
       }
       
