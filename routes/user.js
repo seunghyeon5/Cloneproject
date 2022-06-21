@@ -150,7 +150,7 @@ const postUsersSchema = Joi.object({
   
   //마이페이지 닉네임 수정
   router.put('/user/mypage/nickname/:nickname', authMiddleware, async (req,res) =>{
-    // try{
+     try{
        const {userId} = res.locals.user
        const { nickname }  = req.params; 
        console.log(nickname);
@@ -164,10 +164,10 @@ const postUsersSchema = Joi.object({
       //  console.log(mypagemodifiy);
        res.status(200).send({result : true, message :"수정 완료"})
        
-    //  }catch(err){
-    //   res.status(400).send({result : false, errorMessage: "닉네임 수정 실패.",});
+     }catch(err){
+      res.status(400).send({result : false, errorMessage: "닉네임 수정 실패.",});
   
-    //   }
+      }
       
     });
   // router.put('/user/mypage/:userId/modify', authMiddleware, async (req,res) =>{
