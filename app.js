@@ -6,10 +6,11 @@ const likeRouter = require("./routes/like");
 const marketRouter = require("./routes/market");
 require("dotenv").config();
 const SERVER_PORT = process.env.PORT;
+const SOCKET_PORT = process.env.SOCKET_PORT;
 //socket 통신을 위한 테스트 코드  1:23분 까지
 
 //socket tag
-const io = require('socket.io')(8900,{
+const io = require('socket.io')(process.env.SOCKET_PORT,{
     cors:{
         origin: 'http://localhost:3000',
     },
