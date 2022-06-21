@@ -4,13 +4,15 @@ const cors = require('cors');
 const userRouter = require("./routes/user");
 const likeRouter = require("./routes/like");
 const marketRouter = require("./routes/market");
+const conversationRoute = require('./routes/conversations');
+const messageRoute = require('./routes/messages');
 require("dotenv").config();
 const SERVER_PORT = process.env.PORT;
 const SOCKET_PORT = process.env.SOCKET_PORT;
 //socket 통신을 위한 테스트 코드  1:23분 까지
 
 //socket tag
-// const io = require('socket.io')(process.env.SOCKET_PORT,{
+// const io = require('socket.io')(SOCKET_PORT,{
 //     cors:{
 //         origin: 'http://localhost:3000',
 //     },
@@ -24,7 +26,7 @@ const SOCKET_PORT = process.env.SOCKET_PORT;
 
 
 
-// mongoose.connect('mongodb://0.0.0.0/cloneporject', {   mongodb+srv://test:sparta@cluster0.l2ux3.mongodb.net/THUNDERMARKET
+
 mongoose.connect("mongodb+srv://wea9677:tmxkdlfl@cluster0.xmzro.mongodb.net/CloneProject", {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -45,6 +47,8 @@ app.use(cors({ // CORS 모듈 실행
 
 
 app.use('/api', express.urlencoded({ extended: false }),userRouter);
+app.use('/conversations',conversationRoute);
+app.use('/messages',messageRoute);
 app.use('/like', express.urlencoded({ extended: false }),likeRouter);
 app.use('/market', express.urlencoded({ extended: false }),marketRouter);
 
