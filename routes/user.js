@@ -87,7 +87,7 @@ const postUsersSchema = Joi.object({
         }
 
         // const id = user.userId;
-        const token = jwt.sign({ userId: user.userId }, process.env.JWT_SECRET, {expiresIn: '2h',}); 
+        const token = jwt.sign({ userId: user.userId }, process.env.JWT_SECRET, {expiresIn: '24h',}); 
         res.status(200).send({ message: "로그인에 성공했습니다", token });
         console.log(token);
         console.log(user);
