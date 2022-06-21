@@ -33,7 +33,9 @@ app.use(cors({ // CORS 모듈 실행
 }));
 
 
-app.use('/api', express.urlencoded({ extended: false }),[userRouter,likeRouter, marketRouter]);
+app.use('/api', express.urlencoded({ extended: false }),userRouter);
+app.use('/like', express.urlencoded({ extended: false }),likeRouter);
+app.use('/market', express.urlencoded({ extended: false }),marketRouter);
 
 app.get('/', (req, res) =>{
     res.send('클론코딩 테스트 페이지')
