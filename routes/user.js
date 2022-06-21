@@ -153,16 +153,17 @@ const postUsersSchema = Joi.object({
      try{
        const {userId} = res.locals.user
        const { nickname }  = req.params; 
+       
        console.log(nickname);
        const existnickName = await User.findOne({nickname});
-      //  console.log("지나갑니다아~")
+      
        if(existnickName) {
         return res.status(400).send({ errorMessage: "중복된 닉네임이 존재합니다.", });
+       }else {
+        await User.findByIdAndUpdate(userId, { $set : {nickname}});
+        res.status(200).send({result : true, message :"수정 완료"})
        }
-  
-       await User.findByIdAndUpdate(userId, { $set : {nickname}});
       //  console.log(mypagemodifiy);
-       res.status(200).send({result : true, message :"수정 완료"})
        
      }catch(err){
       res.status(400).send({result : false, errorMessage: "닉네임 수정 실패.",});
