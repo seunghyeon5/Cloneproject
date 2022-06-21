@@ -10,11 +10,11 @@ const SOCKET_PORT = process.env.SOCKET_PORT;
 //socket 통신을 위한 테스트 코드  1:23분 까지
 
 //socket tag
-const io = require('socket.io')(process.env.SOCKET_PORT,{
-    cors:{
-        origin: 'http://localhost:3000',
-    },
-});
+// const io = require('socket.io')(process.env.SOCKET_PORT,{
+//     cors:{
+//         origin: 'http://localhost:3000',
+//     },
+// });
 //
 
     // origin: 
@@ -39,7 +39,7 @@ app.use(express.json());
 
 app.use(cors({ // CORS 모듈 실행
     //origin : "http://clonebunjang.s3-website.ap-northeast-2.amazonaws.com",  
-    origin: "http://localhost:3000", // 출처 허용 옵션 (전부 허용)
+    origin : "http://localhost:3000", // 출처 허용 옵션 (전부 허용)
     credential: 'true' // 사용자 인증이 필요한 리소스(쿠키 ..등) 접근
 }));
 
@@ -54,9 +54,9 @@ app.get('/', (req, res) =>{
 
 //socket 통신을 위한 테스트 코드  1:23분 까지
 //socket tag
-io.on("connection",(socket)=>{
-    console.log("a user connected.")
-})
+// io.on("connection",(socket)=>{
+//     console.log("a user connected.")
+// })
 //
 
 app.listen(SERVER_PORT, () => {
