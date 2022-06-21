@@ -24,6 +24,7 @@ router.post('/like/:itemId',authMiddleware ,async (req, res) => {
         
         const findLike = await Like.findOne({ itemId, nickname });
         //console.log(findLike);
+
         if(findLike){          
             //return res.status(400).send({errorMessage: "이미 좋아요를 누름"})//테스트 메세지
             return res.status(400).send({errorMessage: "fail"});
@@ -61,6 +62,7 @@ router.delete('/cancel/:itemId',authMiddleware ,async (req, res)=> {
             errorMessage: 'error',
         });
     }
+
 });
 
 
