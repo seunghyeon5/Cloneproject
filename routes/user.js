@@ -123,7 +123,8 @@ const postUsersSchema = Joi.object({
     
     const mypost = await Market.find({nickname});
       const mypostDNO = mypost.map((b) => ({
-            itemId : b.itemId,}));
+            itemId : b.itemId,
+            }));
       // console.log(myitems)  userporfilUrl, profilInfo
       res.json({result:true, 
         mypage,
@@ -174,27 +175,6 @@ const postUsersSchema = Joi.object({
       }
       
     });
-  // router.put('/user/mypage/:userId/modify', authMiddleware, async (req,res) =>{
-  // //  try{
-  //    const {userId} = req.params;
-  //    const { nickname, userInfo, userprofileUrl } = req.body; 
-
-  //    const existnicName = await User.findOne({nickname});
-  //   //  console.log("지나갑니다아~")
-  //    if(existnicName) {
-  //     return res.status(400).send({ errorMessage: "중복된 닉네임이 존재합니다.", });
-  //    }
-
-  //    const mypagemodifiy = await User.findByIdAndUpdate(userId, {$set : {nickname, userInfo, userprofileUrl}})
-  //    console.log(mypagemodifiy);
-  //    res.json({result : true, msg :"수정 완료", mypagemodifiy})
-     
-  // //  }catch(err){
-  // //   res.json({result : false});
-
-  // //  }
-    
-  // });
 
   //마이페이지 소개글 수정
   router.put('/user/mypage/info', authMiddleware, async (req, res) =>{
