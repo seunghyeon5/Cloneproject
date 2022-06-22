@@ -15,6 +15,8 @@ const SOCKET_PORT = process.env.SOCKET_PORT;
 // const io = require('socket.io')(SOCKET_PORT,{
 //     cors:{
 //         origin: 'http://localhost:3000',
+//         origin : "*", // 출처 허용 옵션 (전부 허용)
+//         credential: 'true' // 사용자 인증이 필요한 리소스(쿠키 ..등) 접근
 //     },
 // });
 //
@@ -22,10 +24,6 @@ const SOCKET_PORT = process.env.SOCKET_PORT;
     // origin: 
     // ["http://localhost:3000"],
     // credentials: true,
-
-
-
-
 
 mongoose.connect("mongodb+srv://wea9677:tmxkdlfl@cluster0.xmzro.mongodb.net/CloneProject", {
     useNewUrlParser: true,
