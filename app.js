@@ -12,13 +12,13 @@ const SOCKET_PORT = process.env.SOCKET_PORT;
 //socket 통신을 위한 테스트 코드  1:23분 까지
 
 //socket tag
-const io = require('socket.io')(SOCKET_PORT,{
-    cors:{
-        // origin : 'http://localhost:3000',
-        origin : "*", // 출처 허용 옵션 (전부 허용)
-        credential: 'true' // 사용자 인증이 필요한 리소스(쿠키 ..등) 접근
-    },
-});
+// const io = require('socket.io')(SOCKET_PORT,{
+//     cors:{
+//         // origin : 'http://localhost:3000',
+//         origin : "*", // 출처 허용 옵션 (전부 허용)
+//         credential: 'true' // 사용자 인증이 필요한 리소스(쿠키 ..등) 접근
+//     },
+// });
 //
 
     // origin: 
@@ -56,10 +56,10 @@ app.get('/', (req, res) =>{
 
 //socket 통신을 위한 테스트 코드  1:23분 까지
 // socket tag
-io.on("connection",(socket)=>{
-    console.log("a user connected.")
-io.emit("Welcome", "hello this is socket server");
-})
+// io.on("connection",(socket)=>{
+//     console.log("a user connected.")
+// io.emit("Welcome", "hello this is socket server");
+// })
 //
 
 app.listen(SERVER_PORT, () => {
