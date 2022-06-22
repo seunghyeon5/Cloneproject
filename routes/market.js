@@ -2,6 +2,7 @@ const express = require('express');
 const Market = require("../models/market")
 // const User = require("../models/user");
 // const moment = require("moment");
+const User = require("../models/user");
 const authMiddleware = require("../middlewares/auth-middleware")
 const router = express.Router()
 
@@ -38,10 +39,10 @@ function timeSince(date) {
 
 router.post("/", authMiddleware, async(req, res) => {
     try {
-        const { nickname } = res.locals.user;
+        const { nickname, userId } = res.locals.user;
         const { imageUrl, title, price, content, count, condition, exchange, location} = req.body;
         await Market.create({
-            imageUrl, title, price, content, count, condition, exchange, nickname, location
+            imageUrl, title, price, content, count, condition, exchange, nickname, location, userId
         });
         //res.json ({ result : true, msg : "상품등록이 완료되었습니다.", createMarket}) //test 출력
         res.json ({ result : true, msg : "상품등록이 완료되었습니다."});
@@ -125,10 +126,11 @@ router.get("/:search/:sort",  async(req, res) => {
 
 router.get("/:itemId", async (req, res) =>{
     try {
+        const  userId =  res.locals.userId;
         const { itemId } = req.params;
         const item = await Market.findById(itemId);
         const period = timeSince(item.createdAt);        
-        res.json({  item ,period:period})            
+        res.json({  item ,period:period, userId : userId})            
     }catch(err){
        res.json({ result : false })
         console.log(err)
