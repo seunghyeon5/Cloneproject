@@ -36,7 +36,7 @@ router.get('/find/:firstUserId/:secondUserId', async(req,res) => {
         const conversation = await Conversation.findOne({
             members: { $all: [req.params.firstUserId,req.params.secondUserId]},
         });
-        res.status(200).json(conversation)
+        res.status(200).json({conversation:conversation})
     }catch(err){
         res.status(500).json(err); //500 means error inside db or server
     }
