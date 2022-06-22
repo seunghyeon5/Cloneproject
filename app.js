@@ -58,7 +58,7 @@ app.get('/', (req, res) =>{
 // socket tag
 io.on("connection",(socket)=>{
     console.log("a user connected.")
-io.emit("Welcome", "hello this is socket server");
+io.emit("welcome", "hello this is socket server");
 })
 //
 
