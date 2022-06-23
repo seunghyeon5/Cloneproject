@@ -15,7 +15,7 @@ const SOCKET_PORT = process.env.SOCKET_PORT;
 const io = require('socket.io')(SOCKET_PORT,{
     cors:{
         // origin : 'http://localhost:3000',
-        origin : "*", // 출처 허용 옵션 (전부 허용)
+        origin : "http://clonebunjang.s3-website.ap-northeast-2.amazonaws.com", // 출처 허용 옵션 (전부 허용)
         credential: 'true' // 사용자 인증이 필요한 리소스(쿠키 ..등) 접근
     },
 });
@@ -38,8 +38,8 @@ const app = express();
 app.use(express.json());
 
 app.use(cors({ // CORS 모듈 실행
-    //origin : "http://clonebunjang.s3-website.ap-northeast-2.amazonaws.com",  
-    origin : "*", // 출처 허용 옵션 (전부 허용)
+    origin : "http://clonebunjang.s3-website.ap-northeast-2.amazonaws.com",  
+    // origin : "*", // 출처 허용 옵션 (전부 허용)
     credential: 'true' // 사용자 인증이 필요한 리소스(쿠키 ..등) 접근
 }));
 
