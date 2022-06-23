@@ -109,7 +109,7 @@ router.get("/:search/:sort",  async(req, res) => {
             title : a.title,
             price : a.price,
             createdAt : timeSince(a.createdAt),
-            
+            itemId : a.itemId,
             }))
         });
         
