@@ -15,7 +15,7 @@ DATABASE는 MongoDB를 활용 중이며 ec2 인스턴스에서만 접근 할 수
   <img src="https://img.shields.io/badge/-Visual Studio Code-007ACC?style=flat&logo=Visual Studio Code&logoColor=white"/>
 </div>
 
-JAVASCRIPT, NODEJS, EXPRESS, MongoDB, JEST 를 활용합니다.
+JAVASCRIPT, NODEJS, EXPRESS, MongoDB를 활용합니다.
 - 서버는 Amazon Web Service EC2 인스턴스에서 구동 중
 - Joi라이브러리를 활용한 이메일, 비밀번호 형식 구현
 - USER : 회원가입, 로그인 기능, 로그인 토큰을 이용해서 홈페이지 활동 권한 구현
@@ -33,10 +33,10 @@ JAVASCRIPT, NODEJS, EXPRESS, MongoDB, JEST 를 활용합니다.
 - MongoDB - MongoDB 를 [다운로드 및 설치](http://mongodb.org/) 하고 기본 포트(27017)에서 실행 중인지 확인합니다.
 
 ## ERD
+![CFD6CEB0-44A0-4349-A01F-F4B909AB78BE](https://user-images.githubusercontent.com/105096793/175244009-791a6f6e-e8a3-4fed-827a-72015790f17a.jpeg)
 
 
 ## API Design
 
-
-## SA Address
+![screencapture-teamsparta-notion-site-f03818558a8e44798a47a0bd270611d3-2022-06-23-17_31_51](https://user-images.githubusercontent.com/105096793/175254418-9ae42a18-c99e-40ac-a45c-318999649ded.png)
 
