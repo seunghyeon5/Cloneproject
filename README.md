@@ -33,7 +33,8 @@ JAVASCRIPT, NODEJS, EXPRESS, MongoDB를 활용합니다.
 - MongoDB - MongoDB 를 [다운로드 및 설치](http://mongodb.org/) 하고 기본 포트(27017)에서 실행 중인지 확인합니다.
 
 ## ERD
-![CFD6CEB0-44A0-4349-A01F-F4B909AB78BE](https://user-images.githubusercontent.com/105096793/175244009-791a6f6e-e8a3-4fed-827a-72015790f17a.jpeg)
+![6CC9B785-F606-4CB6-8E45-5B3E58F700E5](https://user-images.githubusercontent.com/105096793/175256698-e4ed9c4a-562b-4c00-9173-d88c0db9cdf7.jpeg)
+
 
 
 ## API Design
