@@ -17,7 +17,7 @@ const postUsersSchema = Joi.object({
     password: Joi.string().required().pattern(new RegExp('^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{6,}$')), //최소6자, 하나 이상의 영문자, 하나의 숫자, 하나의 특수문자
     confirmpassword: Joi.string().required(),
     nickname: Joi.string().required(),
-    userprofileUrl : Joi.string().allow(null,'') //.options({ presence(이걸로 필수 필드 생성가능): 'required' }).required() 를 쓰려면 .String을 빼야함
+    userprofileUrl : Joi.string().required(),  //.allow(null,'') //.options({ presence(이걸로 필수 필드 생성가능): 'required' }).required() 를 쓰려면 .String을 빼야함
   });
 
 //회원가입
