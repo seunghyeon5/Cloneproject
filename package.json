@@ -34,5 +34,8 @@
     "url": "https://github.com/seunghyeon5/Cloneproject/issues"
   },
   "homepage": "https://github.com/seunghyeon5/Cloneproject#readme",
-  "keywords": []
+  "keywords": [],
+  "directories": {
+    "test": "test"
+  }
 }
