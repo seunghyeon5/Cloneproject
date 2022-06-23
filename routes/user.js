@@ -105,6 +105,23 @@ const postUsersSchema = Joi.object({
    console.log(res.locals);
   });
 
+  //판매자 정보
+
+  router.get("/user/:sellerId",async (req, res) => {     
+    try{                 
+      const {sellerId}  =  req.params;     
+      const seller = await User.findById(sellerId);
+     
+      res.send({  nickname: seller.nickname, userId : seller.userId });
+    
+    } catch (error) {    
+      res.status(400).send({
+          errorMessage: 'error',
+      });
+    }
+    
+});
+
 
 
 
