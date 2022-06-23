@@ -26,7 +26,7 @@ const postUsersSchema = Joi.object({
       try {
       const { email, password, confirmpassword, nickname, userprofileUrl} = //req.body;
          await postUsersSchema.validateAsync(req.body);
-        // console.log(req.body);
+        
       
   
      if (password !== confirmpassword) {
@@ -37,15 +37,14 @@ const postUsersSchema = Joi.object({
       }
       // 이메일 중복확인 버튼
      const existEmail = await User.findOne({email});
-    //  console.log("지나갑니다.")
-    //  console.log(existId);
+   
     if (existEmail) {
       return res.status(400).send({errorMessage:"중복된 이메일이 존재합니다.",});
         
     } 
      // 닉네임 중복확인 버튼
      const existnicName = await User.findOne({nickname});
-    //  console.log("지나갑니다아~")
+    
      if(existnicName) {
       return res.status(400).send({ errorMessage: "중복된 닉네임이 존재합니다.", });
      }
@@ -54,7 +53,7 @@ const postUsersSchema = Joi.object({
    
       const users = new User({ nickname, password, email, userprofileUrl });
       await users.save();
-      console.log(users)
+      
       res.json({users,
         message : "회원가입에 성공하셨습니다!"
       });
@@ -89,8 +88,7 @@ const postUsersSchema = Joi.object({
         // const id = user.userId;
         const token = jwt.sign({ userId: user.userId }, process.env.JWT_SECRET, {expiresIn: '24h',}); 
         res.status(200).send({ message: "로그인에 성공했습니다", token });
-        console.log(token);
-        console.log(user);
+       
     });
 
 // 로그인 인증
@@ -102,7 +100,7 @@ const postUsersSchema = Joi.object({
    
    
    res.send({ email: user.email, nickname: user.nickname, userId : user.userId });
-   console.log(res.locals);
+   
   });
 
 
@@ -147,7 +145,7 @@ const postUsersSchema = Joi.object({
       const mypostDNO = mypost.map((b) => ({
             itemId : b.itemId,
             }));
-      // console.log(myitems)  userporfilUrl, profilInfo
+      
       res.json({result:true, 
         mypage,
         mypostDNO,
@@ -177,10 +175,9 @@ const postUsersSchema = Joi.object({
        const {userId} = res.locals.user
        const { nickname }  = req.body; 
        
-      //  console.log(nickname);
+      
        const existnickName = await User.findOne({nickname});
-       console.log(nickname);
-       console.log(existnickName);
+    
        
        if(existnickName) {
         return res.status(400).send({result : false, errorMessage: "중복된 닉네임이 존재합니다.", });
@@ -189,7 +186,7 @@ const postUsersSchema = Joi.object({
        
         res.status(200).send({result : true, message :"수정 완료"})
        }
-      //  console.log(mypagemodifiy);
+      
        
      }catch(err){
       res.status(400).send({result : false, errorMessage: "닉네임 수정 실패.",});
