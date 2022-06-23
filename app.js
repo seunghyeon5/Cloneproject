@@ -55,13 +55,13 @@ app.get('/', (req, res) =>{
 });
 
 //socket 통신을 위한 테스트 코드  1:23분 까지
-// socket tag
-/*
+//socket tag
+
 io.on("connection",(socket)=>{
     console.log("a user connected.")
 io.emit("welcome", "hello this is socket server");
 })
-*/
+
 //
 let users = [];
 
