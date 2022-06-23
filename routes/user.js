@@ -110,7 +110,7 @@ const postUsersSchema = Joi.object({
 
   router.get("/user",async (req, res) => {     
     try{                 
-      const {sellerId}  =  req.query;     
+      const sellerId  =  req.query.sellerId;     
       const seller = await User.findById(sellerId);
      
       res.send({  nickname: seller.nickname, userId : seller.userId });
